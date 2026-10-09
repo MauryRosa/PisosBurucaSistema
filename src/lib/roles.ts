@@ -87,7 +87,7 @@ export const MENU: OpcionMenu[] = [
   {
     ruta: '/pedidos',
     titulo: 'Órdenes de pedido',
-    roles: ['administrador', 'vendedora'],
+    roles: TODOS,
     requerimientos: 'RF-09',
     descripcion: 'Pedidos a proveedor.',
   },
