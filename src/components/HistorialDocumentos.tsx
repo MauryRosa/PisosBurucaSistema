@@ -2,6 +2,7 @@
  * HistorialDocumentos.tsx
  * Tabla de los últimos documentos de ciertos tipos (entradas, salidas…).
  * Muestra número, fecha, tipo, referencia, productos, quién lo registró y estado.
+ * Opcionalmente muestra un enlace para imprimir cada documento.
  */
 import {
   NOMBRE_TIPO_DOCUMENTO,
@@ -11,11 +12,13 @@ import {
 } from '@/lib/documentos'
 import { mensajeError } from '@/lib/supabase'
 import { formatearStock } from '@/lib/unidades'
-import { claseCelda, claseEncabezado, claseTabla } from './estilos'
+import { claseBotonTabla, claseCelda, claseEncabezado, claseTabla } from './estilos'
+import { abrirImpresion } from '@/lib/impresion'
 
 interface Props {
   tipos: TipoDocumento[] // tipos de documento a mostrar
   titulo: string // título de la sección
+  imprimible?: boolean // true = mostrar columna "Imprimir"
 }
 
 /**
@@ -42,8 +45,9 @@ const COLOR_ESTADO: Record<DocumentoResumen['estado'], string> = {
 /**
  * HistorialDocumentos: consulta y dibuja la tabla.
  */
-export function HistorialDocumentos({ tipos, titulo }: Props) {
+export function HistorialDocumentos({ tipos, titulo, imprimible = false }: Props) {
   const documentos = useDocumentos(tipos)
+  const columnas = imprimible ? 8 : 7
 
   return (
     <section className="space-y-2">
@@ -64,6 +68,7 @@ export function HistorialDocumentos({ tipos, titulo }: Props) {
                 <th className={claseCelda}>Productos</th>
                 <th className={claseCelda}>Registró</th>
                 <th className={claseCelda}>Estado</th>
+                {imprimible && <th className={claseCelda}></th>}
               </tr>
             </thead>
             <tbody>
@@ -91,11 +96,22 @@ export function HistorialDocumentos({ tipos, titulo }: Props) {
                   <td className={`${claseCelda} capitalize ${COLOR_ESTADO[d.estado]}`}>
                     {d.estado}
                   </td>
+                  {imprimible && (
+                    <td className={claseCelda}>
+                      <button
+                        type="button"
+                        className={claseBotonTabla}
+                        onClick={() => abrirImpresion(d.id)}
+                      >
+                        Imprimir
+                      </button>
+                    </td>
+                  )}
                 </tr>
               ))}
               {documentos.data.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="px-3 py-6 text-center text-slate-500">
+                  <td colSpan={columnas} className="px-3 py-6 text-center text-slate-500">
                     Todavía no hay documentos.
                   </td>
                 </tr>

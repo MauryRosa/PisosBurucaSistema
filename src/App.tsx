@@ -15,11 +15,14 @@ import { PaginaCatalogo } from '@/modulos/catalogo/PaginaCatalogo'
 import { PaginaStock } from '@/modulos/stock/PaginaStock'
 import { PaginaEntradas } from '@/modulos/entradas/PaginaEntradas'
 import { PaginaReservas } from '@/modulos/reservas/PaginaReservas'
+import { ImprimirOrden } from '@/modulos/salidas/ImprimirOrden'
+import { PaginaSalidas } from '@/modulos/salidas/PaginaSalidas'
 
 // Pantallas ya construidas. Al terminar un módulo, se agrega aquí su ruta.
 const PANTALLAS: Record<string, ReactNode> = {
   '/inicio': <Inicio />,
   '/stock': <PaginaStock />,
+  '/salidas': <PaginaSalidas />,
   '/reservas': <PaginaReservas />,
   '/entradas': <PaginaEntradas />,
   '/catalogo': <PaginaCatalogo />,
@@ -57,7 +60,17 @@ function App() {
         ))}
       </Route>
 
-      {/* Cualquier otra dirección → inicio */}
+      {/* Impresión de órdenes: sin menú (fuera del Layout), solo bodega y administración */}
+      <Route
+        path="/imprimir/:id"
+        element={
+          <RutaProtegida roles={['administrador', 'jefe_bodega']}>
+            <ImprimirOrden />
+          </RutaProtegida>
+        }
+      />
+
+      {/* Cualquier otra dirección → inicio (siempre al final) */}
       <Route path="*" element={<Navigate to="/inicio" replace />} />
     </Routes>
   )

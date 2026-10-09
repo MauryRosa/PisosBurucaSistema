@@ -9,3 +9,15 @@
 body {
   @apply bg-slate-50 text-slate-900 antialiased;
 }
+
+/* Impresión de órdenes: hoja carta con márgenes y fondo blanco */
+@page {
+  size: letter;
+  margin: 1.5cm;
+}
+
+@media print {
+  body {
+    background: white;
+  }
+}

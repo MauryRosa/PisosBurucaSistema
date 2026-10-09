@@ -14,6 +14,8 @@ export type EstadoReserva = 'activa' | 'consumida' | 'cancelada'
 /** Reserva con producto, ubicación y vendedora. */
 export interface Reserva {
   id: number
+  producto_id: number // producto reservado
+  ubicacion_id: number // dónde está apartado
   cantidad: number // unidad base
   estado: EstadoReserva
   tipo_comprobante: TipoComprobante | null
@@ -68,7 +70,7 @@ export function useReservas(soloActivas: boolean) {
       let consulta = supabase
         .from('reservas')
         .select(
-          `id, cantidad, estado, tipo_comprobante, numero_comprobante, notas,
+          `id, producto_id, ubicacion_id, cantidad, estado, tipo_comprobante, numero_comprobante, notas,
            motivo_cancelacion, creado_en,
            productos(codigo, nombre, tipo, unidad, piezas_por_caja),
            ubicaciones(nombre),
