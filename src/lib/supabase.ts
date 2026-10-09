@@ -22,12 +22,17 @@ export const supabase = createClient(url, clave)
 /**
  * mensajeError: convierte cualquier error (de Supabase o de JavaScript)
  * en un texto que se puede mostrar al usuario.
+ * Traduce los códigos de PostgreSQL más comunes.
  * @param error Error recibido en un try/catch o en la respuesta de Supabase.
  * @returns Mensaje legible.
  */
 export function mensajeError(error: unknown): string {
-  if (error && typeof error === 'object' && 'message' in error) {
-    return String((error as { message: unknown }).message)
+  if (error && typeof error === 'object') {
+    const e = error as { code?: string; message?: string }
+    if (e.code === '23505') return 'Ya existe un registro con ese código o nombre.' // dato repetido
+    if (e.code === '42501') return 'No tiene permiso para esta operación.' // bloqueado por seguridad
+    if (e.code === '23514') return 'Los datos no cumplen una regla del sistema.' // regla CHECK
+    if (e.message) return e.message
   }
   return 'Ocurrió un error inesperado'
 }
