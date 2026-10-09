@@ -46,7 +46,7 @@ export function PaginaStock() {
     <section className="space-y-4">
       <div>
         <h1 className="text-2xl font-semibold">Consulta de stock</h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Disponible = físico menos reservado. Se actualiza solo cuando bodega registra un
           movimiento.
         </p>
@@ -75,7 +75,7 @@ export function PaginaStock() {
             </option>
           ))}
         </select>
-        <label className="flex items-center gap-2 text-sm text-slate-600">
+        <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
           <input
             type="checkbox"
             checked={soloConExistencia}
@@ -85,11 +85,13 @@ export function PaginaStock() {
         </label>
       </div>
 
-      {stock.isPending && <p className="text-slate-500">Cargando…</p>}
-      {stock.isError && <p className="text-red-700">{mensajeError(stock.error)}</p>}
+      {stock.isPending && <p className="text-slate-500 dark:text-slate-400">Cargando…</p>}
+      {stock.isError && (
+        <p className="text-red-700 dark:text-red-400">{mensajeError(stock.error)}</p>
+      )}
 
       {stock.isSuccess && (
-        <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+        <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
           <table className={claseTabla}>
             <thead className={claseEncabezado}>
               <tr>
@@ -108,24 +110,28 @@ export function PaginaStock() {
                 return (
                   <tr
                     key={`${f.producto_id}-${f.ubicacion_id}`}
-                    className="border-t border-slate-100"
+                    className="border-t border-slate-100 dark:border-slate-800"
                   >
                     <td className={`${claseCelda} font-mono text-xs`}>{f.codigo}</td>
                     <td className={claseCelda}>
                       {f.nombre}
-                      {f.medida && <span className="text-slate-500"> · {f.medida}</span>}
+                      {f.medida && (
+                        <span className="text-slate-500 dark:text-slate-400"> · {f.medida}</span>
+                      )}
                     </td>
-                    <td className={`${claseCelda} text-slate-600`}>{f.ubicacion}</td>
+                    <td className={`${claseCelda} text-slate-600 dark:text-slate-400`}>
+                      {f.ubicacion}
+                    </td>
                     <td
-                      className={`${claseCelda} font-medium ${bajoMinimo ? 'text-amber-700' : ''}`}
+                      className={`${claseCelda} font-medium ${bajoMinimo ? 'text-amber-700 dark:text-amber-400' : ''}`}
                     >
                       {formatearStock(f, f.disponible)}
                       {bajoMinimo && <span className="ml-2 text-xs">bajo mínimo</span>}
                     </td>
-                    <td className={`${claseCelda} text-slate-600`}>
+                    <td className={`${claseCelda} text-slate-600 dark:text-slate-400`}>
                       {formatearStock(f, f.reservado)}
                     </td>
-                    <td className={`${claseCelda} text-slate-600`}>
+                    <td className={`${claseCelda} text-slate-600 dark:text-slate-400`}>
                       {formatearStock(f, f.fisico)}
                     </td>
                   </tr>
@@ -133,7 +139,10 @@ export function PaginaStock() {
               })}
               {filas.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-3 py-6 text-center text-slate-500">
+                  <td
+                    colSpan={6}
+                    className="px-3 py-6 text-center text-slate-500 dark:text-slate-400"
+                  >
                     No hay productos que coincidan.
                   </td>
                 </tr>

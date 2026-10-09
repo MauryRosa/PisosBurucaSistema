@@ -49,8 +49,9 @@ export function SeccionProductos() {
     )
   }, [productos.data, busqueda, verInactivos])
 
-  if (productos.isPending) return <p className="text-slate-500">Cargando…</p>
-  if (productos.isError) return <p className="text-red-700">{mensajeError(productos.error)}</p>
+  if (productos.isPending) return <p className="text-slate-500 dark:text-slate-400">Cargando…</p>
+  if (productos.isError)
+    return <p className="text-red-700 dark:text-red-400">{mensajeError(productos.error)}</p>
 
   return (
     <div className="space-y-4">
@@ -76,7 +77,7 @@ export function SeccionProductos() {
           onChange={(e) => setBusqueda(e.target.value)}
           className={`${claseInput} sm:max-w-md`}
         />
-        <label className="flex items-center gap-2 text-sm text-slate-600">
+        <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
           <input
             type="checkbox"
             checked={verInactivos}
@@ -86,7 +87,7 @@ export function SeccionProductos() {
         </label>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+      <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
         <table className={claseTabla}>
           <thead className={claseEncabezado}>
             <tr>
@@ -104,12 +105,14 @@ export function SeccionProductos() {
             {filtrados.map((p) => (
               <tr
                 key={p.id}
-                className={`border-t border-slate-100 ${p.activo ? '' : 'text-slate-400'}`}
+                className={`border-t border-slate-100 dark:border-slate-800 ${p.activo ? '' : 'text-slate-400 dark:text-slate-500'}`}
               >
                 <td className={`${claseCelda} font-mono text-xs`}>{p.codigo}</td>
                 <td className={claseCelda}>
                   {p.nombre}
-                  {p.medida && <span className="text-slate-500"> · {p.medida}</span>}
+                  {p.medida && (
+                    <span className="text-slate-500 dark:text-slate-400"> · {p.medida}</span>
+                  )}
                 </td>
                 <td className={claseCelda}>{p.tipo === 'piso' ? 'Piso' : 'Accesorio'}</td>
                 <td className={claseCelda}>{p.categoria}</td>
@@ -132,7 +135,10 @@ export function SeccionProductos() {
             ))}
             {filtrados.length === 0 && (
               <tr>
-                <td colSpan={8} className="px-3 py-6 text-center text-slate-500">
+                <td
+                  colSpan={8}
+                  className="px-3 py-6 text-center text-slate-500 dark:text-slate-400"
+                >
                   No hay productos que coincidan.
                 </td>
               </tr>

@@ -17,13 +17,16 @@
 
     <!-- Aplica el tema guardado ANTES de que React dibuje la página,
          para que no se vea un parpadeo blanco al entrar en modo oscuro.
-         Debe usar la misma clave que src/lib/tema.ts ("pb-tema"). -->
+         Debe usar la misma clave que src/lib/tema.ts ("pb-tema").
+         La orden para imprimir (/imprimir/...) siempre se muestra en claro. -->
     <script>
       try {
         var guardado = localStorage.getItem('pb-tema')
+        var imprimiendo = location.pathname.indexOf('/imprimir') === 0
         var oscuro =
-          guardado === 'oscuro' ||
-          (!guardado && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          !imprimiendo &&
+          (guardado === 'oscuro' ||
+            (!guardado && window.matchMedia('(prefers-color-scheme: dark)').matches))
         if (oscuro) document.documentElement.classList.add('dark')
       } catch (e) {}
     </script>

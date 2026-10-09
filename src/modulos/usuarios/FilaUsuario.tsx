@@ -70,7 +70,9 @@ export function FilaUsuario({ usuario: u, esYo }: Props) {
   }
 
   return (
-    <tr className={`border-t border-slate-100 align-top ${u.activo ? '' : 'text-slate-400'}`}>
+    <tr
+      className={`border-t border-slate-100 dark:border-slate-800 align-top ${u.activo ? '' : 'text-slate-400 dark:text-slate-500'}`}
+    >
       <td className={claseCelda}>
         {modo === 'editar' ? (
           <input
@@ -80,7 +82,8 @@ export function FilaUsuario({ usuario: u, esYo }: Props) {
           />
         ) : (
           <>
-            {u.nombre} {esYo && <span className="text-xs text-slate-500">(usted)</span>}
+            {u.nombre}{' '}
+            {esYo && <span className="text-xs text-slate-500 dark:text-slate-400">(usted)</span>}
           </>
         )}
       </td>
@@ -168,7 +171,7 @@ export function FilaUsuario({ usuario: u, esYo }: Props) {
           </div>
         )}
 
-        {error && <span className="block text-xs text-red-700">{error}</span>}
+        {error && <span className="block text-xs text-red-700 dark:text-red-400">{error}</span>}
       </td>
     </tr>
   )

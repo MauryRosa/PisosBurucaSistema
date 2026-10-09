@@ -155,12 +155,12 @@ export function PaginaTraslados() {
     <section className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Traslados</h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Movimiento de producto entre ubicaciones, con su propia serie de correlativo (TRA).
         </p>
       </div>
 
-      <div className="space-y-4 rounded-lg border border-slate-200 bg-white p-4">
+      <div className="space-y-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
         {/* Origen, destino y observaciones */}
         <div className="grid gap-4 sm:grid-cols-3">
           <Campo etiqueta="Sale de">
@@ -202,7 +202,7 @@ export function PaginaTraslados() {
 
         {/* Reservas en el origen que pueden viajar con el producto */}
         {reservasEnOrigen.length > 0 && (
-          <div className="space-y-2 rounded-md border border-slate-200 bg-slate-50 p-3 text-sm">
+          <div className="space-y-2 rounded-md border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 p-3 text-sm">
             <p className="font-medium">
               Reservas activas en el origen. Marque las que viajan con este traslado:
             </p>
@@ -239,7 +239,9 @@ export function PaginaTraslados() {
         <CapturaLineas productos={productos.data ?? []} lineas={lineas} onCambiar={setLineas} />
 
         {mensaje && (
-          <p className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700' : 'text-red-700'}`}>
+          <p
+            className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}
+          >
             {mensaje.texto}
           </p>
         )}

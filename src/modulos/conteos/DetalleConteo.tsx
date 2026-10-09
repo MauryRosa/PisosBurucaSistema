@@ -87,18 +87,18 @@ export function DetalleConteo({ conteo, onVolver }: Props) {
       </button>
 
       {/* Encabezado y progreso */}
-      <div className="rounded-lg border border-slate-200 bg-white p-4 text-sm">
+      <div className="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 text-sm">
         <h2 className="text-lg font-semibold">
           Conteo #{conteo.id} · {conteo.ubicaciones.nombre} ·{' '}
           {conteo.categoria ?? 'Todos los productos'}
         </h2>
-        <p className="text-slate-600">
+        <p className="text-slate-600 dark:text-slate-400">
           Estado: <span className="font-medium capitalize">{conteo.estado}</span> · Contados{' '}
           {contadas} de {todas.length} · Con diferencia: {conDiferencia}
           {conteo.ajuste && ` · Ajuste ${conteo.ajuste.numero} (${conteo.ajuste.estado})`}
         </p>
         {editable && (
-          <p className="mt-1 text-amber-700">
+          <p className="mt-1 text-amber-700 dark:text-amber-400">
             No registre movimientos en esta ubicación mientras el conteo esté abierto.
           </p>
         )}
@@ -113,7 +113,7 @@ export function DetalleConteo({ conteo, onVolver }: Props) {
           onChange={(e) => setBusqueda(e.target.value)}
           className={`${claseInput} sm:max-w-md`}
         />
-        <label className="flex items-center gap-2 text-sm text-slate-600">
+        <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
           <input
             type="checkbox"
             checked={soloPendientes}
@@ -123,11 +123,13 @@ export function DetalleConteo({ conteo, onVolver }: Props) {
         </label>
       </div>
 
-      {lineas.isPending && <p className="text-slate-500">Cargando…</p>}
-      {lineas.isError && <p className="text-red-700">{mensajeError(lineas.error)}</p>}
+      {lineas.isPending && <p className="text-slate-500 dark:text-slate-400">Cargando…</p>}
+      {lineas.isError && (
+        <p className="text-red-700 dark:text-red-400">{mensajeError(lineas.error)}</p>
+      )}
 
       {lineas.isSuccess && (
-        <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+        <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
           <table className={claseTabla}>
             <thead className={claseEncabezado}>
               <tr>
@@ -152,7 +154,9 @@ export function DetalleConteo({ conteo, onVolver }: Props) {
       )}
 
       {mensaje && (
-        <p className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700' : 'text-red-700'}`}>
+        <p
+          className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}
+        >
           {mensaje.texto}
         </p>
       )}

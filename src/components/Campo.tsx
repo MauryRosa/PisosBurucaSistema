@@ -18,10 +18,12 @@ interface Props {
 export function Campo({ etiqueta, error, ayuda, children }: Props) {
   return (
     <label className="block text-sm">
-      <span className="font-medium text-slate-700">{etiqueta}</span>
+      <span className="font-medium text-slate-700 dark:text-slate-300">{etiqueta}</span>
       {children}
-      {ayuda && !error && <span className="text-xs text-slate-500">{ayuda}</span>}
-      {error && <span className="text-xs text-red-700">{error}</span>}
+      {ayuda && !error && (
+        <span className="text-xs text-slate-500 dark:text-slate-400">{ayuda}</span>
+      )}
+      {error && <span className="text-xs text-red-700 dark:text-red-400">{error}</span>}
     </label>
   )
 }

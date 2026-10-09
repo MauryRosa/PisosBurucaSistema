@@ -21,7 +21,7 @@ export function PaginaMovimientos() {
     <section className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Mermas y otros movimientos</h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Mermas, consumo interno, exhibición, devoluciones a proveedor y cambios o garantías.
         </p>
       </div>

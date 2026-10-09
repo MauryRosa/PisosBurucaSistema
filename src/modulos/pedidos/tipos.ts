@@ -17,10 +17,10 @@ export const NOMBRE_ESTADO_ORDEN: Record<EstadoOrden, string> = {
 
 /** Color de cada estado. */
 export const COLOR_ESTADO_ORDEN: Record<EstadoOrden, string> = {
-  pendiente: 'text-amber-700',
-  recibida_parcial: 'text-blue-700',
-  recibida: 'text-green-700',
-  cancelada: 'text-red-700',
+  pendiente: 'text-amber-700 dark:text-amber-400',
+  recibida_parcial: 'text-blue-700 dark:text-sky-400',
+  recibida: 'text-green-700 dark:text-green-400',
+  cancelada: 'text-red-700 dark:text-red-400',
 }
 
 /** Producto de una orden: lo pedido y lo recibido (unidad base). */

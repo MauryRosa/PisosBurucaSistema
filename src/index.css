@@ -39,6 +39,12 @@ html.dark {
   color-scheme: dark;
 }
 
+/* Casillas y radios con el rojo de la marca */
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: var(--color-marca-rojo);
+}
+
 /* Impresión de órdenes (Paso 9): hoja carta y siempre en claro */
 @page {
   size: letter;

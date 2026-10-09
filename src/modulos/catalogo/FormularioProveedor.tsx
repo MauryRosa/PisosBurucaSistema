@@ -51,7 +51,7 @@ export function FormularioProveedor({ proveedor, alTerminar }: Props) {
   return (
     <form
       onSubmit={handleSubmit(enviar)}
-      className="space-y-4 rounded-lg border border-slate-200 bg-white p-4"
+      className="space-y-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4"
     >
       <h2 className="font-semibold">{proveedor ? 'Editar proveedor' : 'Nuevo proveedor'}</h2>
 
@@ -67,7 +67,7 @@ export function FormularioProveedor({ proveedor, alTerminar }: Props) {
         </Campo>
       </div>
 
-      {error && <p className="text-sm text-red-700">{error}</p>}
+      {error && <p className="text-sm text-red-700 dark:text-red-400">{error}</p>}
 
       <div className="flex gap-2">
         <button type="submit" disabled={isSubmitting} className={claseBoton}>

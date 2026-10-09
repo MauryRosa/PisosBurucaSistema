@@ -62,7 +62,7 @@ export function PaginaPedidos() {
     <section className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Órdenes de pedido</h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Pedidos a proveedor y su recepción en bodega, comparando lo recibido contra lo pedido.
         </p>
       </div>
@@ -81,12 +81,14 @@ export function PaginaPedidos() {
       {/* Lista de órdenes */}
       <section className="space-y-2">
         <h2 className="font-semibold">Órdenes</h2>
-        {error && <p className="text-sm text-red-700">{error}</p>}
-        {ordenes.isPending && <p className="text-slate-500">Cargando…</p>}
-        {ordenes.isError && <p className="text-red-700">{mensajeError(ordenes.error)}</p>}
+        {error && <p className="text-sm text-red-700 dark:text-red-400">{error}</p>}
+        {ordenes.isPending && <p className="text-slate-500 dark:text-slate-400">Cargando…</p>}
+        {ordenes.isError && (
+          <p className="text-red-700 dark:text-red-400">{mensajeError(ordenes.error)}</p>
+        )}
 
         {ordenes.isSuccess && (
-          <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+          <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
             <table className={claseTabla}>
               <thead className={claseEncabezado}>
                 <tr>
@@ -101,7 +103,10 @@ export function PaginaPedidos() {
               </thead>
               <tbody>
                 {ordenes.data.map((o) => (
-                  <tr key={o.id} className="border-t border-slate-100 align-top">
+                  <tr
+                    key={o.id}
+                    className="border-t border-slate-100 dark:border-slate-800 align-top"
+                  >
                     <td className={`${claseCelda} font-mono text-xs whitespace-nowrap`}>
                       {o.numero}
                     </td>
@@ -113,15 +118,19 @@ export function PaginaPedidos() {
                       {o.detalle_orden_pedido.map((l) => (
                         <div key={l.id}>
                           {l.productos.nombre}:{' '}
-                          <span className="text-slate-600">
+                          <span className="text-slate-600 dark:text-slate-400">
                             {formatearStock(l.productos, l.cantidad_recibida)} /{' '}
                             {formatearStock(l.productos, l.cantidad)}
                           </span>
                         </div>
                       ))}
-                      {o.notas && <div className="text-xs text-slate-500">Notas: {o.notas}</div>}
+                      {o.notas && (
+                        <div className="text-xs text-slate-500 dark:text-slate-400">
+                          Notas: {o.notas}
+                        </div>
+                      )}
                       {o.motivo_cancelacion && (
-                        <div className="text-xs text-red-700">
+                        <div className="text-xs text-red-700 dark:text-red-400">
                           Cancelada: {o.motivo_cancelacion}
                         </div>
                       )}
@@ -189,7 +198,10 @@ export function PaginaPedidos() {
                 ))}
                 {ordenes.data.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="px-3 py-6 text-center text-slate-500">
+                    <td
+                      colSpan={7}
+                      className="px-3 py-6 text-center text-slate-500 dark:text-slate-400"
+                    >
                       Todavía no hay órdenes de pedido.
                     </td>
                   </tr>

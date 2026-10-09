@@ -60,7 +60,9 @@ export function FilaConteo({ linea, conteoId, editable }: Props) {
   const dif = linea.diferencia ?? 0
 
   return (
-    <tr className={`border-t border-slate-100 align-top ${contado ? '' : 'bg-amber-50/40'}`}>
+    <tr
+      className={`border-t border-slate-100 dark:border-slate-800 align-top ${contado ? '' : 'bg-amber-50/40 dark:bg-amber-500/10'}`}
+    >
       <td className={claseCelda}>
         <span className="font-mono text-xs">{p.codigo}</span> · {p.nombre}
       </td>
@@ -100,10 +102,10 @@ export function FilaConteo({ linea, conteoId, editable }: Props) {
         ) : (
           '—'
         )}
-        {error && <span className="block text-xs text-red-700">{error}</span>}
+        {error && <span className="block text-xs text-red-700 dark:text-red-400">{error}</span>}
       </td>
       <td
-        className={`${claseCelda} ${!contado ? 'text-slate-400' : dif === 0 ? 'text-green-700' : 'font-medium text-amber-700'}`}
+        className={`${claseCelda} ${!contado ? 'text-slate-400 dark:text-slate-500' : dif === 0 ? 'text-green-700 dark:text-green-400' : 'font-medium text-amber-700 dark:text-amber-400'}`}
       >
         {contado ? textoDiferencia(linea) : 'Pendiente'}
       </td>

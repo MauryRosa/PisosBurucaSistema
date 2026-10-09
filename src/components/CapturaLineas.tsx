@@ -87,7 +87,7 @@ export function CapturaLineas({ productos, lineas, onCambiar }: Props) {
       {/* Fila de captura */}
       <div className="grid gap-3 sm:grid-cols-[1fr_8rem_8rem_auto] sm:items-end">
         <label className="block text-sm">
-          <span className="font-medium text-slate-700">Producto</span>
+          <span className="font-medium text-slate-700 dark:text-slate-300">Producto</span>
           <SelectorProducto
             productos={productos}
             seleccionado={producto}
@@ -122,11 +122,11 @@ export function CapturaLineas({ productos, lineas, onCambiar }: Props) {
         </button>
       </div>
 
-      {error && <p className="text-sm text-red-700">{error}</p>}
+      {error && <p className="text-sm text-red-700 dark:text-red-400">{error}</p>}
 
       {/* Líneas agregadas */}
       {lineas.length > 0 && (
-        <div className="overflow-x-auto rounded-lg border border-slate-200">
+        <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800">
           <table className={claseTabla}>
             <thead className={claseEncabezado}>
               <tr>
@@ -137,7 +137,7 @@ export function CapturaLineas({ productos, lineas, onCambiar }: Props) {
             </thead>
             <tbody>
               {lineas.map((l) => (
-                <tr key={l.producto.id} className="border-t border-slate-100">
+                <tr key={l.producto.id} className="border-t border-slate-100 dark:border-slate-800">
                   <td className={claseCelda}>
                     <span className="font-mono text-xs">{l.producto.codigo}</span> ·{' '}
                     {l.producto.nombre}

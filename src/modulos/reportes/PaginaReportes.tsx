@@ -29,10 +29,12 @@ export function PaginaReportes() {
     <section className="space-y-4">
       <div>
         <h1 className="text-2xl font-semibold">Reportes</h1>
-        <p className="text-sm text-slate-500">Todos los reportes se pueden exportar a Excel.</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">
+          Todos los reportes se pueden exportar a Excel.
+        </p>
       </div>
 
-      <div className="flex flex-wrap gap-1 border-b border-slate-200">
+      <div className="flex flex-wrap gap-1 border-b border-slate-200 dark:border-slate-800">
         {PESTANAS.map((p) => (
           <button
             key={p.id}
@@ -40,8 +42,8 @@ export function PaginaReportes() {
             onClick={() => setPestana(p.id)}
             className={`-mb-px border-b-2 px-4 py-2 text-sm ${
               pestana === p.id
-                ? 'border-slate-900 font-medium text-slate-900'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
+                ? 'border-marca-rojo font-medium text-marca-rojo-oscuro dark:text-red-300'
+                : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white'
             }`}
           >
             {p.titulo}

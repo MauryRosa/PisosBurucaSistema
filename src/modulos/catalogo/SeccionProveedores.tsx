@@ -24,8 +24,9 @@ export function SeccionProveedores() {
   // null = formulario cerrado, 'nuevo' = alta, objeto = edición
   const [editando, setEditando] = useState<Proveedor | 'nuevo' | null>(null)
 
-  if (proveedores.isPending) return <p className="text-slate-500">Cargando…</p>
-  if (proveedores.isError) return <p className="text-red-700">{mensajeError(proveedores.error)}</p>
+  if (proveedores.isPending) return <p className="text-slate-500 dark:text-slate-400">Cargando…</p>
+  if (proveedores.isError)
+    return <p className="text-red-700 dark:text-red-400">{mensajeError(proveedores.error)}</p>
 
   return (
     <div className="space-y-4">
@@ -41,7 +42,7 @@ export function SeccionProveedores() {
         </button>
       )}
 
-      <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+      <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
         <table className={claseTabla}>
           <thead className={claseEncabezado}>
             <tr>
@@ -56,7 +57,7 @@ export function SeccionProveedores() {
             {proveedores.data.map((p) => (
               <tr
                 key={p.id}
-                className={`border-t border-slate-100 ${p.activo ? '' : 'text-slate-400'}`}
+                className={`border-t border-slate-100 dark:border-slate-800 ${p.activo ? '' : 'text-slate-400 dark:text-slate-500'}`}
               >
                 <td className={claseCelda}>{p.nombre}</td>
                 <td className={claseCelda}>{p.contacto ?? '—'}</td>
@@ -78,7 +79,10 @@ export function SeccionProveedores() {
             ))}
             {proveedores.data.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-3 py-6 text-center text-slate-500">
+                <td
+                  colSpan={5}
+                  className="px-3 py-6 text-center text-slate-500 dark:text-slate-400"
+                >
                   Todavía no hay proveedores.
                 </td>
               </tr>

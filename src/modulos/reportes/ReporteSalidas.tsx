@@ -75,16 +75,18 @@ export function ReporteSalidas() {
       </div>
 
       {salidas.isSuccess && (
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-slate-400">
           {ordenes} órdenes de salida · {anuladas} anuladas · {comprobantes} facturas/recibos
           distintos (sin contar anuladas)
         </p>
       )}
-      {salidas.isPending && <p className="text-slate-500">Cargando…</p>}
-      {salidas.isError && <p className="text-red-700">{mensajeError(salidas.error)}</p>}
+      {salidas.isPending && <p className="text-slate-500 dark:text-slate-400">Cargando…</p>}
+      {salidas.isError && (
+        <p className="text-red-700 dark:text-red-400">{mensajeError(salidas.error)}</p>
+      )}
 
       {salidas.isSuccess && (
-        <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+        <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
           <table className={claseTabla}>
             <thead className={claseEncabezado}>
               <tr>
@@ -102,7 +104,7 @@ export function ReporteSalidas() {
               {filas.map((f) => (
                 <tr
                   key={f.linea_id}
-                  className={`border-t border-slate-100 ${f.estado === 'anulado' ? 'text-red-700 line-through' : ''}`}
+                  className={`border-t border-slate-100 dark:border-slate-800 ${f.estado === 'anulado' ? 'text-red-700 dark:text-red-400 line-through' : ''}`}
                 >
                   <td className={`${claseCelda} whitespace-nowrap`}>
                     {formatearFechaHora(f.fecha)}
@@ -120,7 +122,10 @@ export function ReporteSalidas() {
               ))}
               {filas.length === 0 && (
                 <tr>
-                  <td colSpan={8} className="px-3 py-6 text-center text-slate-500">
+                  <td
+                    colSpan={8}
+                    className="px-3 py-6 text-center text-slate-500 dark:text-slate-400"
+                  >
                     No hay salidas en este periodo.
                   </td>
                 </tr>

@@ -27,14 +27,14 @@ export function PaginaCatalogo() {
     <section className="space-y-4">
       <div>
         <h1 className="text-2xl font-semibold">Catálogo</h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Productos, proveedores y ubicaciones. Nada se borra: se desactiva para conservar el
           historial.
         </p>
       </div>
 
       {/* Pestañas */}
-      <div className="flex gap-1 border-b border-slate-200">
+      <div className="flex gap-1 border-b border-slate-200 dark:border-slate-800">
         {PESTANAS.map((p) => (
           <button
             key={p.id}
@@ -42,8 +42,8 @@ export function PaginaCatalogo() {
             onClick={() => setPestana(p.id)}
             className={`-mb-px border-b-2 px-4 py-2 text-sm ${
               pestana === p.id
-                ? 'border-slate-900 font-medium text-slate-900'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
+                ? 'border-marca-rojo font-medium text-marca-rojo-oscuro dark:text-red-300'
+                : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white'
             }`}
           >
             {p.titulo}

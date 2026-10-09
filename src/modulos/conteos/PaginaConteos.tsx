@@ -65,14 +65,14 @@ export function PaginaConteos() {
     <section className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Conteos físicos</h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Compare lo que hay físicamente contra el sistema. Las diferencias generan un ajuste que
           gerencia aprueba.
         </p>
       </div>
 
       {/* Nuevo conteo */}
-      <div className="space-y-4 rounded-lg border border-slate-200 bg-white p-4">
+      <div className="space-y-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
         <h2 className="font-semibold">Nuevo conteo</h2>
         <div className="grid gap-4 sm:grid-cols-3">
           <Campo etiqueta="Ubicación">
@@ -112,7 +112,7 @@ export function PaginaConteos() {
             />
           </Campo>
         </div>
-        {error && <p className="text-sm text-red-700">{error}</p>}
+        {error && <p className="text-sm text-red-700 dark:text-red-400">{error}</p>}
         <button
           type="button"
           onClick={iniciarConteo}
@@ -126,10 +126,12 @@ export function PaginaConteos() {
       {/* Lista de conteos */}
       <section className="space-y-2">
         <h2 className="font-semibold">Conteos</h2>
-        {conteos.isPending && <p className="text-slate-500">Cargando…</p>}
-        {conteos.isError && <p className="text-red-700">{mensajeError(conteos.error)}</p>}
+        {conteos.isPending && <p className="text-slate-500 dark:text-slate-400">Cargando…</p>}
+        {conteos.isError && (
+          <p className="text-red-700 dark:text-red-400">{mensajeError(conteos.error)}</p>
+        )}
         {conteos.isSuccess && (
-          <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+          <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
             <table className={claseTabla}>
               <thead className={claseEncabezado}>
                 <tr>
@@ -145,7 +147,7 @@ export function PaginaConteos() {
               </thead>
               <tbody>
                 {conteos.data.map((c) => (
-                  <tr key={c.id} className="border-t border-slate-100">
+                  <tr key={c.id} className="border-t border-slate-100 dark:border-slate-800">
                     <td className={claseCelda}>{c.id}</td>
                     <td className={`${claseCelda} whitespace-nowrap`}>
                       {new Date(c.creado_en).toLocaleString('es-SV')}
@@ -170,7 +172,10 @@ export function PaginaConteos() {
                 ))}
                 {conteos.data.length === 0 && (
                   <tr>
-                    <td colSpan={8} className="px-3 py-6 text-center text-slate-500">
+                    <td
+                      colSpan={8}
+                      className="px-3 py-6 text-center text-slate-500 dark:text-slate-400"
+                    >
                       Todavía no hay conteos.
                     </td>
                   </tr>
