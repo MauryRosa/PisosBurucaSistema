@@ -12,8 +12,11 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  // No revisar la carpeta "dist" (código compilado, no lo escribimos nosotros)
-  globalIgnores(['dist']),
+  // Carpetas que ESLint NO revisa:
+  //  - dist: código compilado (no lo escribimos nosotros)
+  //  - supabase/functions: Edge Functions que corren en Deno (servidores de
+  //    Supabase), no en el navegador; usan otras reglas y variables globales
+  globalIgnores(['dist', 'supabase/functions']),
   {
     // Aplicar estas reglas a todos los archivos TypeScript y React
     files: ['**/*.{ts,tsx}'],
