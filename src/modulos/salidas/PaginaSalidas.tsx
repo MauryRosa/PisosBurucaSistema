@@ -55,7 +55,7 @@ export function PaginaSalidas() {
   const origen =
     tipo === 'salida_venta' ? (principal?.id ?? null) : (miniElegida ?? minibodegas[0]?.id ?? null)
 
-   // Reservas activas con el mismo comprobante y en el mismo origen
+  // Reservas activas con el mismo comprobante y en el mismo origen
   // (el React Compiler memoriza este cálculo automáticamente)
   const numeroLimpio = numero.trim()
   const reservasDelComprobante = (reservas.data ?? []).filter(
@@ -66,7 +66,7 @@ export function PaginaSalidas() {
       r.ubicacion_id === origen,
   )
 
-    /**
+  /**
    * usarReservas: llena las líneas con los productos de las reservas encontradas.
    * Si hay varias reservas del mismo producto, suma sus cantidades.
    */
