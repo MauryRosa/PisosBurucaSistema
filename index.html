@@ -2,9 +2,31 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Ícono de la pestaña: los diamantes del logo -->
+    <link rel="icon" type="image/png" href="/isotipo-pisos-buruca.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inventario · Pisos Buruca</title>
+
+    <!-- Tipografía Inter (Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Aplica el tema guardado ANTES de que React dibuje la página,
+         para que no se vea un parpadeo blanco al entrar en modo oscuro.
+         Debe usar la misma clave que src/lib/tema.ts ("pb-tema"). -->
+    <script>
+      try {
+        var guardado = localStorage.getItem('pb-tema')
+        var oscuro =
+          guardado === 'oscuro' ||
+          (!guardado && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        if (oscuro) document.documentElement.classList.add('dark')
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

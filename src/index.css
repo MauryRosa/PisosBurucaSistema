@@ -1,16 +1,45 @@
-/*
- * index.css
- * Estilos globales de la aplicación.
- * Tailwind genera aquí todas las clases que usamos en los componentes.
- */
+/* =====================================================================
+   Estilos globales · Pisos Buruca
+   - Tailwind CSS 4
+   - Colores de la marca (verde y rojo del logo)
+   - Modo oscuro manual: se activa poniendo la clase "dark" en <html>
+   ===================================================================== */
+
 @import 'tailwindcss';
 
-/* Fondo y color de texto base para todas las pantallas */
-body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+/* Modo oscuro por clase (no por el sistema operativo).
+   Así el usuario elige con el botón de tema y se guarda su preferencia. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Colores y tipografía de la empresa.
+   Se usan como clases normales de Tailwind:
+   bg-marca-rojo, text-marca-verde, border-marca-rojo-claro, etc. */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Rojo del logo (texto "PISOS BURUCA" y diamante derecho) */
+  --color-marca-rojo: #e3141b;
+  --color-marca-rojo-oscuro: #b80f15;
+  --color-marca-rojo-claro: #fde8e8;
+
+  /* Verde del logo (diamante izquierdo) */
+  --color-marca-verde: #0b8a0b;
+  --color-marca-verde-oscuro: #076b07;
+  --color-marca-verde-claro: #e6f4e6;
 }
 
-/* Impresión de órdenes: hoja carta con márgenes y fondo blanco */
+/* Fondo y texto base de toda la aplicación, en claro y en oscuro */
+body {
+  @apply bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100;
+}
+
+/* Que los controles nativos (barras de desplazamiento, fechas, selects)
+   también se vean oscuros en modo oscuro */
+html.dark {
+  color-scheme: dark;
+}
+
+/* Impresión de órdenes (Paso 9): hoja carta y siempre en claro */
 @page {
   size: letter;
   margin: 1.5cm;
@@ -19,5 +48,6 @@ body {
 @media print {
   body {
     background: white;
+    color: black;
   }
 }
