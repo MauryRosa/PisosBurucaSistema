@@ -17,6 +17,7 @@ import { PaginaEntradas } from '@/modulos/entradas/PaginaEntradas'
 import { PaginaReservas } from '@/modulos/reservas/PaginaReservas'
 import { ImprimirOrden } from '@/modulos/salidas/ImprimirOrden'
 import { PaginaSalidas } from '@/modulos/salidas/PaginaSalidas'
+import { PaginaTraslados } from '@/modulos/traslados/PaginaTraslados'
 
 // Pantallas ya construidas. Al terminar un módulo, se agrega aquí su ruta.
 const PANTALLAS: Record<string, ReactNode> = {
@@ -26,6 +27,7 @@ const PANTALLAS: Record<string, ReactNode> = {
   '/reservas': <PaginaReservas />,
   '/entradas': <PaginaEntradas />,
   '/catalogo': <PaginaCatalogo />,
+  '/traslados': <PaginaTraslados />,
 }
 
 /**
