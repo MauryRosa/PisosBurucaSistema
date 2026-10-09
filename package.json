@@ -12,11 +12,16 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
     "@supabase/supabase-js": "^2.117.3",
     "@tailwindcss/vite": "^4.3.3",
+    "@tanstack/react-query": "^5.104.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "tailwindcss": "^4.3.3"
+    "react-hook-form": "^7.89.0",
+    "react-router": "^8.4.0",
+    "tailwindcss": "^4.3.3",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
