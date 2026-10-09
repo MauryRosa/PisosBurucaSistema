@@ -14,11 +14,13 @@ import { Pendiente } from '@/pages/Pendiente'
 import { PaginaCatalogo } from '@/modulos/catalogo/PaginaCatalogo'
 import { PaginaStock } from '@/modulos/stock/PaginaStock'
 import { PaginaEntradas } from '@/modulos/entradas/PaginaEntradas'
+import { PaginaReservas } from '@/modulos/reservas/PaginaReservas'
 
 // Pantallas ya construidas. Al terminar un módulo, se agrega aquí su ruta.
 const PANTALLAS: Record<string, ReactNode> = {
   '/inicio': <Inicio />,
   '/stock': <PaginaStock />,
+  '/reservas': <PaginaReservas />,
   '/entradas': <PaginaEntradas />,
   '/catalogo': <PaginaCatalogo />,
 }
