@@ -20,7 +20,7 @@ export function RutaProtegida({ children, roles }: Props) {
   const { sesion, perfil, cargando } = useSesion()
 
   // 1. Todavía revisando la sesión
-  if (cargando) return <p className="p-6 text-slate-500">Cargando…</p>
+  if (cargando) return <p className="p-6 text-slate-500 dark:text-slate-400">Cargando…</p>
 
   // 2. Sin sesión → al login
   if (!sesion) return <Navigate to="/login" replace />
@@ -28,7 +28,7 @@ export function RutaProtegida({ children, roles }: Props) {
   // 3. Usuario sin perfil o desactivado
   if (!perfil || !perfil.activo) {
     return (
-      <p className="p-6 text-red-700">
+      <p className="p-6 text-red-700 dark:text-red-400">
         Su usuario no tiene un perfil activo. Pida al administrador que lo active.
       </p>
     )
@@ -36,7 +36,9 @@ export function RutaProtegida({ children, roles }: Props) {
 
   // 4. Rol sin permiso para esta pantalla
   if (roles && !roles.includes(perfil.rol)) {
-    return <p className="p-6 text-red-700">No tiene permiso para ver esta sección.</p>
+    return (
+      <p className="p-6 text-red-700 dark:text-red-400">No tiene permiso para ver esta sección.</p>
+    )
   }
 
   // 5. Todo bien → mostrar la pantalla

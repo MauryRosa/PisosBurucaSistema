@@ -59,10 +59,10 @@ export function PanelAnulacion() {
   }
 
   return (
-    <section className="space-y-3 rounded-lg border border-slate-200 bg-white p-4">
+    <section className="space-y-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
       <div>
         <h2 className="font-semibold">Anular documento</h2>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           El documento no se borra: queda anulado con su motivo y el stock se revierte.
         </p>
       </div>
@@ -83,7 +83,7 @@ export function PanelAnulacion() {
 
       {/* Resumen del documento encontrado */}
       {documento && (
-        <div className="space-y-2 rounded-md border border-slate-200 bg-slate-50 p-3 text-sm">
+        <div className="space-y-2 rounded-md border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 p-3 text-sm">
           <p>
             <span className="font-mono font-medium">{documento.numero}</span> ·{' '}
             {NOMBRE_TIPO_DOCUMENTO[documento.tipo]} ·{' '}
@@ -105,7 +105,7 @@ export function PanelAnulacion() {
           </ul>
 
           {documento.estado === 'anulado' ? (
-            <p className="text-red-700">Este documento ya está anulado.</p>
+            <p className="text-red-700 dark:text-red-400">Este documento ya está anulado.</p>
           ) : (
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
               <Campo etiqueta="Motivo de la anulación">
@@ -129,7 +129,9 @@ export function PanelAnulacion() {
       )}
 
       {mensaje && (
-        <p className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700' : 'text-red-700'}`}>
+        <p
+          className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}
+        >
           {mensaje.texto}
         </p>
       )}

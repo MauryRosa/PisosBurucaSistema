@@ -94,17 +94,21 @@ export function RecepcionOrden({ orden, onCerrar }: Props) {
   /** comparacion: texto y color de lo recibido contra lo pendiente (RF-11). */
   const comparacion = (l: LineaOrden): { texto: string; color: string } => {
     const ahora = recibeAhora(l)
-    if (ahora === null) return { texto: 'Cantidad no válida', color: 'text-red-700' }
+    if (ahora === null)
+      return { texto: 'Cantidad no válida', color: 'text-red-700 dark:text-red-400' }
     const diferencia = ahora - pendienteDe(l)
-    if (ahora === 0) return { texto: 'No llegó', color: 'text-slate-500' }
-    if (diferencia === 0) return { texto: 'Completo', color: 'text-green-700' }
+    if (ahora === 0) return { texto: 'No llegó', color: 'text-slate-500 dark:text-slate-400' }
+    if (diferencia === 0) return { texto: 'Completo', color: 'text-green-700 dark:text-green-400' }
     if (diferencia < 0) {
       return {
         texto: `Faltan ${formatearStock(l.productos, -diferencia)}`,
-        color: 'text-amber-700',
+        color: 'text-amber-700 dark:text-amber-400',
       }
     }
-    return { texto: `Sobran ${formatearStock(l.productos, diferencia)}`, color: 'text-blue-700' }
+    return {
+      texto: `Sobran ${formatearStock(l.productos, diferencia)}`,
+      color: 'text-blue-700 dark:text-sky-400',
+    }
   }
 
   /** registrar: valida y registra la recepción como entrada de compra. */
@@ -145,7 +149,7 @@ export function RecepcionOrden({ orden, onCerrar }: Props) {
   }
 
   return (
-    <div className="space-y-4 rounded-lg border border-slate-200 bg-white p-4">
+    <div className="space-y-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
       <h2 className="font-semibold">
         Recibir {orden.numero} · {orden.proveedores.nombre}
       </h2>
@@ -175,7 +179,7 @@ export function RecepcionOrden({ orden, onCerrar }: Props) {
         </Campo>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-slate-200">
+      <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800">
         <table className={claseTabla}>
           <thead className={claseEncabezado}>
             <tr>
@@ -193,7 +197,10 @@ export function RecepcionOrden({ orden, onCerrar }: Props) {
               const c = captura[l.id] ?? { cajas: '', piezas: '' }
               const comp = comparacion(l)
               return (
-                <tr key={l.id} className="border-t border-slate-100 align-top">
+                <tr
+                  key={l.id}
+                  className="border-t border-slate-100 dark:border-slate-800 align-top"
+                >
                   <td className={claseCelda}>{l.productos.nombre}</td>
                   <td className={claseCelda}>{formatearStock(l.productos, l.cantidad)}</td>
                   <td className={claseCelda}>{formatearStock(l.productos, l.cantidad_recibida)}</td>
@@ -229,7 +236,9 @@ export function RecepcionOrden({ orden, onCerrar }: Props) {
       </div>
 
       {mensaje && (
-        <p className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700' : 'text-red-700'}`}>
+        <p
+          className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}
+        >
           {mensaje.texto}
         </p>
       )}

@@ -73,7 +73,7 @@ function FilaPendiente({ documento: d, esAdmin }: PropsFila) {
   }
 
   return (
-    <li className="space-y-2 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm">
+    <li className="space-y-2 rounded-lg border border-amber-200 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-500/10 p-3 text-sm">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <p>
           <span className="font-mono font-medium">{d.numero}</span> ·{' '}
@@ -88,7 +88,7 @@ function FilaPendiente({ documento: d, esAdmin }: PropsFila) {
       </div>
 
       <p>
-        <span className="text-slate-500">Motivo:</span> {d.motivo ?? '—'}
+        <span className="text-slate-500 dark:text-slate-400">Motivo:</span> {d.motivo ?? '—'}
       </p>
       <ul className="list-inside list-disc">
         {d.detalle_documento.map((l, i) => (
@@ -143,7 +143,7 @@ function FilaPendiente({ documento: d, esAdmin }: PropsFila) {
         </div>
       )}
 
-      {error && <p className="text-red-700">{error}</p>}
+      {error && <p className="text-red-700 dark:text-red-400">{error}</p>}
     </li>
   )
 }
@@ -157,10 +157,12 @@ export function PanelPendientes({ esAdmin }: { esAdmin: boolean }) {
   return (
     <section className="space-y-2">
       <h2 className="font-semibold">Pendientes de aprobación</h2>
-      {pendientes.isPending && <p className="text-slate-500">Cargando…</p>}
-      {pendientes.isError && <p className="text-red-700">{mensajeError(pendientes.error)}</p>}
+      {pendientes.isPending && <p className="text-slate-500 dark:text-slate-400">Cargando…</p>}
+      {pendientes.isError && (
+        <p className="text-red-700 dark:text-red-400">{mensajeError(pendientes.error)}</p>
+      )}
       {pendientes.isSuccess && pendientes.data.length === 0 && (
-        <p className="text-sm text-slate-500">No hay documentos pendientes.</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">No hay documentos pendientes.</p>
       )}
       {pendientes.isSuccess && pendientes.data.length > 0 && (
         <ul className="space-y-2">

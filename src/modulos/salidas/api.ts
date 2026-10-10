@@ -19,7 +19,11 @@ export interface DocumentoImprimible {
   retira_nombre: string | null
   retira_placa: string | null
   motivo: string | null
+  motivo_anulacion: string | null
+  documento_proveedor: string | null
+  proveedores: { nombre: string } | null // proveedor (entradas y devoluciones)
   creador: { nombre: string } | null
+  aprobador: { nombre: string } | null // quien aprobó (mermas y ajustes)
   detalle_documento: {
     cantidad: number
     origen: { nombre: string } | null
@@ -47,8 +51,10 @@ export function useDocumentoImprimible(id: number) {
         .from('documentos')
         .select(
           `id, numero, tipo, fecha, estado, tipo_comprobante, numero_comprobante,
-           retira_nombre, retira_placa, motivo,
+           retira_nombre, retira_placa, motivo, motivo_anulacion, documento_proveedor,
+           proveedores(nombre),
            creador:perfiles!documentos_creado_por_fkey(nombre),
+           aprobador:perfiles!documentos_aprobado_por_fkey(nombre),
            detalle_documento(cantidad,
              origen:ubicaciones!detalle_documento_ubicacion_origen_id_fkey(nombre),
              destino:ubicaciones!detalle_documento_ubicacion_destino_id_fkey(nombre),

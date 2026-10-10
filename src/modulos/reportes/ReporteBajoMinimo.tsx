@@ -5,7 +5,7 @@
  */
 import { claseBoton, claseCelda, claseEncabezado, claseTabla } from '@/components/estilos'
 import { exportarExcel } from '@/lib/excel'
-import { hoyLocal } from '@/lib/fechas'
+import { formatearFecha, hoyLocal } from '@/lib/fechas'
 import { mensajeError } from '@/lib/supabase'
 import { formatearStock } from '@/lib/unidades'
 import { useStock } from '@/modulos/stock/api'
@@ -54,15 +54,20 @@ export function ReporteBajoMinimo() {
         'Faltante (unidad base)': p.faltante,
         Unidad: p.fila.unidad,
       })),
+      {
+        titulo: 'Productos bajo stock mínimo',
+        subtitulo: `Existencias al ${formatearFecha(hoyLocal())} · disponible de todas las ubicaciones`,
+      },
     )
 
-  if (stock.isPending) return <p className="text-slate-500">Cargando…</p>
-  if (stock.isError) return <p className="text-red-700">{mensajeError(stock.error)}</p>
+  if (stock.isPending) return <p className="text-slate-500 dark:text-slate-400">Cargando…</p>
+  if (stock.isError)
+    return <p className="text-red-700 dark:text-red-400">{mensajeError(stock.error)}</p>
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-2">
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-slate-400">
           {bajos.length} producto(s) por debajo de su stock mínimo.
         </p>
         <button
@@ -75,7 +80,7 @@ export function ReporteBajoMinimo() {
         </button>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+      <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
         <table className={claseTabla}>
           <thead className={claseEncabezado}>
             <tr>
@@ -88,10 +93,13 @@ export function ReporteBajoMinimo() {
           </thead>
           <tbody>
             {bajos.map((p) => (
-              <tr key={p.fila.producto_id} className="border-t border-slate-100">
+              <tr
+                key={p.fila.producto_id}
+                className="border-t border-slate-100 dark:border-slate-800"
+              >
                 <td className={`${claseCelda} font-mono text-xs`}>{p.fila.codigo}</td>
                 <td className={claseCelda}>{p.fila.nombre}</td>
-                <td className={`${claseCelda} text-amber-700`}>
+                <td className={`${claseCelda} text-amber-700 dark:text-amber-400`}>
                   {formatearStock(p.fila, p.disponible)}
                 </td>
                 <td className={claseCelda}>{formatearStock(p.fila, p.fila.stock_minimo)}</td>
@@ -102,7 +110,10 @@ export function ReporteBajoMinimo() {
             ))}
             {bajos.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-3 py-6 text-center text-slate-500">
+                <td
+                  colSpan={5}
+                  className="px-3 py-6 text-center text-slate-500 dark:text-slate-400"
+                >
                   Ningún producto está por debajo de su mínimo.
                 </td>
               </tr>

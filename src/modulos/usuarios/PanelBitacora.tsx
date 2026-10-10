@@ -13,7 +13,7 @@ import {
   claseTabla,
 } from '@/components/estilos'
 import { exportarExcel } from '@/lib/excel'
-import { formatearFechaHora, hoyLocal } from '@/lib/fechas'
+import { formatearFechaHora, hoyLocal, textoPeriodo } from '@/lib/fechas'
 import { mensajeError } from '@/lib/supabase'
 import { FiltroFechas } from '@/modulos/reportes/FiltroFechas'
 import { useBitacora, usePerfilesNombres } from './api'
@@ -58,6 +58,12 @@ export function PanelBitacora() {
         Registro: resumenRegistro(r.valor_anterior, r.valor_nuevo) || r.registro_id,
         Cambios: descripcionCambios(r),
       })),
+      {
+        titulo: 'Bitácora de cambios del sistema',
+        subtitulo: `${textoPeriodo(desde, hasta)} · Tabla: ${
+          tabla === 'todas' ? 'Todas' : (NOMBRE_TABLA[tabla] ?? tabla)
+        }`,
+      },
     )
 
   return (
@@ -84,16 +90,18 @@ export function PanelBitacora() {
         </button>
       </div>
 
-      <p className="text-xs text-slate-500">
+      <p className="text-xs text-slate-500 dark:text-slate-400">
         Se muestran hasta 300 registros, los más recientes primero. "Sistema" = cambios hechos
         automáticamente (por ejemplo, al crear un usuario desde esta pantalla).
       </p>
 
-      {bitacora.isPending && <p className="text-slate-500">Cargando…</p>}
-      {bitacora.isError && <p className="text-red-700">{mensajeError(bitacora.error)}</p>}
+      {bitacora.isPending && <p className="text-slate-500 dark:text-slate-400">Cargando…</p>}
+      {bitacora.isError && (
+        <p className="text-red-700 dark:text-red-400">{mensajeError(bitacora.error)}</p>
+      )}
 
       {bitacora.isSuccess && (
-        <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+        <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
           <table className={claseTabla}>
             <thead className={claseEncabezado}>
               <tr>
@@ -107,7 +115,10 @@ export function PanelBitacora() {
             </thead>
             <tbody>
               {filas.map((r) => (
-                <tr key={r.id} className="border-t border-slate-100 align-top">
+                <tr
+                  key={r.id}
+                  className="border-t border-slate-100 dark:border-slate-800 align-top"
+                >
                   <td className={`${claseCelda} whitespace-nowrap`}>
                     {formatearFechaHora(r.fecha)}
                   </td>
@@ -124,7 +135,10 @@ export function PanelBitacora() {
               ))}
               {filas.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-3 py-6 text-center text-slate-500">
+                  <td
+                    colSpan={6}
+                    className="px-3 py-6 text-center text-slate-500 dark:text-slate-400"
+                  >
                     No hay registros en este periodo.
                   </td>
                 </tr>

@@ -37,9 +37,9 @@ function referencia(d: DocumentoResumen): string {
 
 /** Color del estado del documento. */
 const COLOR_ESTADO: Record<DocumentoResumen['estado'], string> = {
-  aprobado: 'text-green-700',
-  pendiente: 'text-amber-700',
-  anulado: 'text-red-700 line-through',
+  aprobado: 'text-green-700 dark:text-green-400',
+  pendiente: 'text-amber-700 dark:text-amber-400',
+  anulado: 'text-red-700 dark:text-red-400 line-through',
 }
 
 /**
@@ -53,11 +53,13 @@ export function HistorialDocumentos({ tipos, titulo, imprimible = false }: Props
     <section className="space-y-2">
       <h2 className="font-semibold">{titulo}</h2>
 
-      {documentos.isPending && <p className="text-slate-500">Cargando…</p>}
-      {documentos.isError && <p className="text-red-700">{mensajeError(documentos.error)}</p>}
+      {documentos.isPending && <p className="text-slate-500 dark:text-slate-400">Cargando…</p>}
+      {documentos.isError && (
+        <p className="text-red-700 dark:text-red-400">{mensajeError(documentos.error)}</p>
+      )}
 
       {documentos.isSuccess && (
-        <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+        <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
           <table className={claseTabla}>
             <thead className={claseEncabezado}>
               <tr>
@@ -73,7 +75,10 @@ export function HistorialDocumentos({ tipos, titulo, imprimible = false }: Props
             </thead>
             <tbody>
               {documentos.data.map((d) => (
-                <tr key={d.id} className="border-t border-slate-100 align-top">
+                <tr
+                  key={d.id}
+                  className="border-t border-slate-100 dark:border-slate-800 align-top"
+                >
                   <td className={`${claseCelda} font-mono text-xs whitespace-nowrap`}>
                     {d.numero}
                   </td>
@@ -86,7 +91,7 @@ export function HistorialDocumentos({ tipos, titulo, imprimible = false }: Props
                     {d.detalle_documento.map((l, i) => (
                       <div key={i}>
                         {l.productos.nombre}:{' '}
-                        <span className="text-slate-600">
+                        <span className="text-slate-600 dark:text-slate-400">
                           {formatearStock(l.productos, l.cantidad)}
                         </span>
                       </div>
@@ -111,7 +116,10 @@ export function HistorialDocumentos({ tipos, titulo, imprimible = false }: Props
               ))}
               {documentos.data.length === 0 && (
                 <tr>
-                  <td colSpan={columnas} className="px-3 py-6 text-center text-slate-500">
+                  <td
+                    colSpan={columnas}
+                    className="px-3 py-6 text-center text-slate-500 dark:text-slate-400"
+                  >
                     Todavía no hay documentos.
                   </td>
                 </tr>

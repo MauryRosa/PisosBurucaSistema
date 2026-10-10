@@ -19,9 +19,9 @@ import { FormularioReserva } from './FormularioReserva'
 
 /** Color de cada estado. */
 const COLOR_ESTADO: Record<EstadoReserva, string> = {
-  activa: 'text-green-700',
-  consumida: 'text-slate-500',
-  cancelada: 'text-red-700',
+  activa: 'text-green-700 dark:text-green-400',
+  consumida: 'text-slate-500 dark:text-slate-400',
+  cancelada: 'text-red-700 dark:text-red-400',
 }
 
 /**
@@ -57,7 +57,7 @@ export function PaginaReservas() {
     <section className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Reservas</h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Producto apartado a pedido de una vendedora. Se resta del disponible y se consume al
           registrar la salida con el mismo número de factura o recibo.
         </p>
@@ -69,7 +69,7 @@ export function PaginaReservas() {
       <section className="space-y-2">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold">{soloActivas ? 'Reservas activas' : 'Últimas reservas'}</h2>
-          <label className="flex items-center gap-2 text-sm text-slate-600">
+          <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
             <input
               type="checkbox"
               checked={!soloActivas}
@@ -79,12 +79,14 @@ export function PaginaReservas() {
           </label>
         </div>
 
-        {error && <p className="text-sm text-red-700">{error}</p>}
-        {reservas.isPending && <p className="text-slate-500">Cargando…</p>}
-        {reservas.isError && <p className="text-red-700">{mensajeError(reservas.error)}</p>}
+        {error && <p className="text-sm text-red-700 dark:text-red-400">{error}</p>}
+        {reservas.isPending && <p className="text-slate-500 dark:text-slate-400">Cargando…</p>}
+        {reservas.isError && (
+          <p className="text-red-700 dark:text-red-400">{mensajeError(reservas.error)}</p>
+        )}
 
         {reservas.isSuccess && (
-          <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+          <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
             <table className={claseTabla}>
               <thead className={claseEncabezado}>
                 <tr>
@@ -101,7 +103,10 @@ export function PaginaReservas() {
               </thead>
               <tbody>
                 {reservas.data.map((r) => (
-                  <tr key={r.id} className="border-t border-slate-100 align-top">
+                  <tr
+                    key={r.id}
+                    className="border-t border-slate-100 dark:border-slate-800 align-top"
+                  >
                     <td className={`${claseCelda} whitespace-nowrap`}>
                       {new Date(r.creado_en).toLocaleString('es-SV')}
                     </td>
@@ -120,7 +125,7 @@ export function PaginaReservas() {
                     <td className={claseCelda}>
                       {r.notas ?? ''}
                       {r.motivo_cancelacion && (
-                        <span className="block text-xs text-red-700">
+                        <span className="block text-xs text-red-700 dark:text-red-400">
                           Cancelada: {r.motivo_cancelacion}
                         </span>
                       )}
@@ -175,7 +180,10 @@ export function PaginaReservas() {
                 ))}
                 {reservas.data.length === 0 && (
                   <tr>
-                    <td colSpan={9} className="px-3 py-6 text-center text-slate-500">
+                    <td
+                      colSpan={9}
+                      className="px-3 py-6 text-center text-slate-500 dark:text-slate-400"
+                    >
                       No hay reservas.
                     </td>
                   </tr>

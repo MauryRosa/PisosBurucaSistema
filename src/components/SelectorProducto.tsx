@@ -41,14 +41,14 @@ export function SelectorProducto({ productos, seleccionado, onSeleccionar }: Pro
   // Ya hay un producto elegido
   if (seleccionado) {
     return (
-      <div className="mt-1 flex items-center justify-between gap-2 rounded-md border border-slate-300 bg-slate-50 px-3 py-2 text-sm">
+      <div className="mt-1 flex items-center justify-between gap-2 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-3 py-2 text-sm">
         <span>
           <span className="font-mono text-xs">{seleccionado.codigo}</span> · {seleccionado.nombre}{' '}
-          <span className="text-slate-500">({empaque(seleccionado)})</span>
+          <span className="text-slate-500 dark:text-slate-400">({empaque(seleccionado)})</span>
         </span>
         <button
           type="button"
-          className="text-slate-600 underline"
+          className="text-slate-600 dark:text-slate-400 underline"
           onClick={() => onSeleccionar(null)}
         >
           Cambiar
@@ -68,19 +68,19 @@ export function SelectorProducto({ productos, seleccionado, onSeleccionar }: Pro
         className={claseInput}
       />
       {coincidencias.length > 0 && (
-        <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-md border border-slate-200 bg-white shadow-lg">
+        <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg">
           {coincidencias.map((p) => (
             <li key={p.id}>
               <button
                 type="button"
-                className="w-full px-3 py-2 text-left text-sm hover:bg-slate-100"
+                className="w-full px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-800"
                 onClick={() => {
                   onSeleccionar(p)
                   setTexto('')
                 }}
               >
                 <span className="font-mono text-xs">{p.codigo}</span> · {p.nombre}{' '}
-                <span className="text-slate-500">({empaque(p)})</span>
+                <span className="text-slate-500 dark:text-slate-400">({empaque(p)})</span>
               </button>
             </li>
           ))}

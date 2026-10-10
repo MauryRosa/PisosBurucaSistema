@@ -17,7 +17,7 @@ import {
 } from '@/components/estilos'
 import { NOMBRE_TIPO_DOCUMENTO } from '@/lib/documentos'
 import { exportarExcel } from '@/lib/excel'
-import { formatearFechaHora, hoyLocal, inicioDeMes, inicioDelDia } from '@/lib/fechas'
+import { formatearFechaHora, hoyLocal, inicioDeMes, inicioDelDia, textoPeriodo } from '@/lib/fechas'
 import { mensajeError } from '@/lib/supabase'
 import { formatearStock } from '@/lib/unidades'
 import { useProductos, useUbicaciones } from '@/modulos/catalogo/api'
@@ -56,33 +56,43 @@ export function ReporteKardex() {
   /** exportar: descarga el kardex en Excel (incluye el saldo inicial). */
   const exportar = () => {
     if (!producto) return
-    exportarExcel(`kardex-${producto.codigo}-${desde}-a-${hasta}`, 'Kardex', [
+    exportarExcel(
+      `kardex-${producto.codigo}-${desde}-a-${hasta}`,
+      'Kardex',
+      [
+        {
+          Fecha: desde,
+          Documento: '',
+          Tipo: 'Saldo inicial',
+          Entrada: '',
+          Salida: '',
+          Saldo: texto(saldoInicial),
+          'Saldo (unidad base)': saldoInicial,
+        },
+        ...filas.map((f) => ({
+          Fecha: formatearFechaHora(f.fecha),
+          Documento: f.numero,
+          Tipo: NOMBRE_TIPO_DOCUMENTO[f.tipo],
+          Entrada: f.entrada ? texto(f.entrada) : '',
+          Salida: f.salida ? texto(f.salida) : '',
+          Saldo: texto(f.saldo),
+          'Saldo (unidad base)': f.saldo,
+        })),
+      ],
       {
-        Fecha: desde,
-        Documento: '',
-        Tipo: 'Saldo inicial',
-        Entrada: '',
-        Salida: '',
-        Saldo: texto(saldoInicial),
-        'Saldo (unidad base)': saldoInicial,
+        titulo: `Kardex · ${producto.codigo} ${producto.nombre}`,
+        subtitulo: `${textoPeriodo(desde, hasta)} · Ubicación: ${
+          ubicaciones.data?.find((u) => u.id === ubicacion)?.nombre ?? '—'
+        }`,
       },
-      ...filas.map((f) => ({
-        Fecha: formatearFechaHora(f.fecha),
-        Documento: f.numero,
-        Tipo: NOMBRE_TIPO_DOCUMENTO[f.tipo],
-        Entrada: f.entrada ? texto(f.entrada) : '',
-        Salida: f.salida ? texto(f.salida) : '',
-        Saldo: texto(f.saldo),
-        'Saldo (unidad base)': f.saldo,
-      })),
-    ])
+    )
   }
 
   return (
     <div className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:items-end">
         <label className="block text-sm lg:col-span-2">
-          <span className="font-medium text-slate-700">Producto</span>
+          <span className="font-medium text-slate-700 dark:text-slate-300">Producto</span>
           <SelectorProducto
             productos={productos.data ?? []}
             seleccionado={producto}
@@ -114,12 +124,20 @@ export function ReporteKardex() {
         Exportar a Excel
       </button>
 
-      {!producto && <p className="text-sm text-slate-500">Elija un producto para ver su kardex.</p>}
-      {producto && kardex.isPending && <p className="text-slate-500">Cargando…</p>}
-      {kardex.isError && <p className="text-red-700">{mensajeError(kardex.error)}</p>}
+      {!producto && (
+        <p className="text-sm text-slate-500 dark:text-slate-400">
+          Elija un producto para ver su kardex.
+        </p>
+      )}
+      {producto && kardex.isPending && (
+        <p className="text-slate-500 dark:text-slate-400">Cargando…</p>
+      )}
+      {kardex.isError && (
+        <p className="text-red-700 dark:text-red-400">{mensajeError(kardex.error)}</p>
+      )}
 
       {producto && kardex.isSuccess && (
-        <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+        <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
           <table className={claseTabla}>
             <thead className={claseEncabezado}>
               <tr>
@@ -132,7 +150,7 @@ export function ReporteKardex() {
               </tr>
             </thead>
             <tbody>
-              <tr className="border-t border-slate-100 bg-slate-50 font-medium">
+              <tr className="border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 font-medium">
                 <td className={claseCelda}>{desde}</td>
                 <td className={claseCelda} colSpan={4}>
                   Saldo inicial del periodo
@@ -140,16 +158,16 @@ export function ReporteKardex() {
                 <td className={claseCelda}>{texto(saldoInicial)}</td>
               </tr>
               {filas.map((f) => (
-                <tr key={f.linea_id} className="border-t border-slate-100">
+                <tr key={f.linea_id} className="border-t border-slate-100 dark:border-slate-800">
                   <td className={`${claseCelda} whitespace-nowrap`}>
                     {formatearFechaHora(f.fecha)}
                   </td>
                   <td className={`${claseCelda} font-mono text-xs`}>{f.numero}</td>
                   <td className={claseCelda}>{NOMBRE_TIPO_DOCUMENTO[f.tipo]}</td>
-                  <td className={`${claseCelda} text-green-700`}>
+                  <td className={`${claseCelda} text-green-700 dark:text-green-400`}>
                     {f.entrada ? texto(f.entrada) : ''}
                   </td>
-                  <td className={`${claseCelda} text-red-700`}>
+                  <td className={`${claseCelda} text-red-700 dark:text-red-400`}>
                     {f.salida ? texto(f.salida) : ''}
                   </td>
                   <td className={`${claseCelda} font-medium`}>{texto(f.saldo)}</td>

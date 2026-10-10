@@ -51,11 +51,13 @@ export function Login() {
     <div className="flex min-h-screen items-center justify-center p-4">
       <form
         onSubmit={handleSubmit(entrar)}
-        className="w-full max-w-sm space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm"
+        className="w-full max-w-sm space-y-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm"
       >
         <div>
           <h1 className="text-xl font-semibold">Pisos Buruca</h1>
-          <p className="text-sm text-slate-500">Control de inventario de bodega</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Control de inventario de bodega
+          </p>
         </div>
 
         <label className="block text-sm">
@@ -64,9 +66,11 @@ export function Login() {
             type="email"
             autoComplete="username"
             {...register('correo')}
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-slate-300 dark:border-slate-700 px-3 py-2"
           />
-          {errors.correo && <span className="text-red-700">{errors.correo.message}</span>}
+          {errors.correo && (
+            <span className="text-red-700 dark:text-red-400">{errors.correo.message}</span>
+          )}
         </label>
 
         <label className="block text-sm">
@@ -75,17 +79,19 @@ export function Login() {
             type="password"
             autoComplete="current-password"
             {...register('contrasena')}
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
+            className="mt-1 w-full rounded-md border border-slate-300 dark:border-slate-700 px-3 py-2"
           />
-          {errors.contrasena && <span className="text-red-700">{errors.contrasena.message}</span>}
+          {errors.contrasena && (
+            <span className="text-red-700 dark:text-red-400">{errors.contrasena.message}</span>
+          )}
         </label>
 
-        {error && <p className="text-sm text-red-700">{error}</p>}
+        {error && <p className="text-sm text-red-700 dark:text-red-400">{error}</p>}
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-md bg-slate-900 px-4 py-2 font-medium text-white disabled:opacity-60"
+          className="w-full rounded-md bg-marca-rojo px-4 py-2 font-medium text-white hover:bg-marca-rojo-oscuro disabled:opacity-60"
         >
           {isSubmitting ? 'Entrando…' : 'Entrar'}
         </button>

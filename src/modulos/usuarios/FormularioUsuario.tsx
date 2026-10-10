@@ -42,7 +42,7 @@ export function FormularioUsuario() {
   }
 
   return (
-    <div className="space-y-4 rounded-lg border border-slate-200 bg-white p-4">
+    <div className="space-y-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
       <h2 className="font-semibold">Nuevo usuario</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Campo etiqueta="Nombre">
@@ -85,7 +85,9 @@ export function FormularioUsuario() {
       </div>
 
       {mensaje && (
-        <p className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700' : 'text-red-700'}`}>
+        <p
+          className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}
+        >
           {mensaje.texto}
         </p>
       )}

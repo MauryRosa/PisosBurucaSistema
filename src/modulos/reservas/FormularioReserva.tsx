@@ -122,19 +122,19 @@ export function FormularioReserva() {
   }
 
   return (
-    <div className="space-y-4 rounded-lg border border-slate-200 bg-white p-4">
+    <div className="space-y-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
       <h2 className="font-semibold">Nueva reserva</h2>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block text-sm">
-          <span className="font-medium text-slate-700">Producto</span>
+          <span className="font-medium text-slate-700 dark:text-slate-300">Producto</span>
           <SelectorProducto
             productos={productos.data ?? []}
             seleccionado={producto}
             onSeleccionar={setProducto}
           />
           {producto && (
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-slate-500 dark:text-slate-400">
               Disponible: {formatearStock(producto, disponible)}
             </span>
           )}
@@ -221,7 +221,9 @@ export function FormularioReserva() {
       </div>
 
       {mensaje && (
-        <p className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700' : 'text-red-700'}`}>
+        <p
+          className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}
+        >
           {mensaje.texto}
         </p>
       )}

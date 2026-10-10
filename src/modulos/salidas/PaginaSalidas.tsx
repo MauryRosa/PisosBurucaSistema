@@ -138,12 +138,12 @@ export function PaginaSalidas() {
     <section className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Salidas por venta</h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Ningún producto sale de bodega sin su orden de salida ligada a la factura o recibo.
         </p>
       </div>
 
-      <div className="space-y-4 rounded-lg border border-slate-200 bg-white p-4">
+      <div className="space-y-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
         {/* Tipo y origen */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Campo etiqueta="Tipo de salida">
@@ -221,12 +221,12 @@ export function PaginaSalidas() {
 
         {/* Aviso de reservas con el mismo comprobante */}
         {reservasDelComprobante.length > 0 && (
-          <div className="space-y-2 rounded-md border border-green-200 bg-green-50 p-3 text-sm">
-            <p className="font-medium text-green-800">
+          <div className="space-y-2 rounded-md border border-green-200 dark:border-green-500/30 bg-green-50 dark:bg-green-500/10 p-3 text-sm">
+            <p className="font-medium text-green-800 dark:text-green-300">
               Hay {reservasDelComprobante.length} reserva(s) con este comprobante. Se consumirán al
               registrar la salida:
             </p>
-            <ul className="list-inside list-disc text-green-900">
+            <ul className="list-inside list-disc text-green-900 dark:text-green-200">
               {reservasDelComprobante.map((r) => (
                 <li key={r.id}>
                   {r.productos.nombre}: {formatearStock(r.productos, r.cantidad)} (
@@ -244,7 +244,9 @@ export function PaginaSalidas() {
         <CapturaLineas productos={productos.data ?? []} lineas={lineas} onCambiar={setLineas} />
 
         {mensaje && (
-          <p className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700' : 'text-red-700'}`}>
+          <p
+            className={`text-sm ${mensaje.tipo === 'ok' ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}
+          >
             {mensaje.texto}
           </p>
         )}
