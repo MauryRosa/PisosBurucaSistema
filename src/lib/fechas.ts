@@ -40,3 +40,17 @@ export function finDelDia(fecha: string): string {
 export function formatearFechaHora(iso: string): string {
   return new Date(iso).toLocaleString('es-SV')
 }
+
+/**
+ * formatearFecha: convierte "2026-10-09" en "09/10/2026" (formato de El Salvador).
+ * Se usa en títulos y periodos de los reportes.
+ */
+export function formatearFecha(fecha: string): string {
+  const [anio, mes, dia] = fecha.slice(0, 10).split('-')
+  return `${dia}/${mes}/${anio}`
+}
+
+/** textoPeriodo: "Del 01/10/2026 al 09/10/2026" para el encabezado de reportes. */
+export function textoPeriodo(desde: string, hasta: string): string {
+  return `Del ${formatearFecha(desde)} al ${formatearFecha(hasta)}`
+}

@@ -13,7 +13,7 @@ import {
   claseTabla,
 } from '@/components/estilos'
 import { exportarExcel } from '@/lib/excel'
-import { formatearFechaHora, hoyLocal } from '@/lib/fechas'
+import { formatearFechaHora, hoyLocal, textoPeriodo } from '@/lib/fechas'
 import { mensajeError } from '@/lib/supabase'
 import { FiltroFechas } from '@/modulos/reportes/FiltroFechas'
 import { useBitacora, usePerfilesNombres } from './api'
@@ -58,6 +58,12 @@ export function PanelBitacora() {
         Registro: resumenRegistro(r.valor_anterior, r.valor_nuevo) || r.registro_id,
         Cambios: descripcionCambios(r),
       })),
+      {
+        titulo: 'Bitácora de cambios del sistema',
+        subtitulo: `${textoPeriodo(desde, hasta)} · Tabla: ${
+          tabla === 'todas' ? 'Todas' : (NOMBRE_TABLA[tabla] ?? tabla)
+        }`,
+      },
     )
 
   return (

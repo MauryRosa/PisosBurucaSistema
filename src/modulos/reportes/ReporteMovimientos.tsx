@@ -14,7 +14,7 @@ import {
 } from '@/components/estilos'
 import { NOMBRE_TIPO_DOCUMENTO, type TipoDocumento } from '@/lib/documentos'
 import { exportarExcel } from '@/lib/excel'
-import { formatearFechaHora, hoyLocal, inicioDeMes } from '@/lib/fechas'
+import { formatearFechaHora, hoyLocal, inicioDeMes, textoPeriodo } from '@/lib/fechas'
 import { mensajeError } from '@/lib/supabase'
 import { formatearStock } from '@/lib/unidades'
 import { useMovimientosPeriodo } from './api'
@@ -66,6 +66,12 @@ export function ReporteMovimientos() {
         'Entra a': f.destino,
         Registró: f.registro,
       })),
+      {
+        titulo: 'Reporte de movimientos de inventario',
+        subtitulo: `${textoPeriodo(desde, hasta)} · Tipo: ${
+          tipo === 'todos' ? 'Todos' : NOMBRE_TIPO_DOCUMENTO[tipo]
+        }`,
+      },
     )
 
   return (

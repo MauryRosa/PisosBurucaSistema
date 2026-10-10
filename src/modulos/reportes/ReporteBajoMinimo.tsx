@@ -5,7 +5,7 @@
  */
 import { claseBoton, claseCelda, claseEncabezado, claseTabla } from '@/components/estilos'
 import { exportarExcel } from '@/lib/excel'
-import { hoyLocal } from '@/lib/fechas'
+import { formatearFecha, hoyLocal } from '@/lib/fechas'
 import { mensajeError } from '@/lib/supabase'
 import { formatearStock } from '@/lib/unidades'
 import { useStock } from '@/modulos/stock/api'
@@ -54,6 +54,10 @@ export function ReporteBajoMinimo() {
         'Faltante (unidad base)': p.faltante,
         Unidad: p.fila.unidad,
       })),
+      {
+        titulo: 'Productos bajo stock mínimo',
+        subtitulo: `Existencias al ${formatearFecha(hoyLocal())} · disponible de todas las ubicaciones`,
+      },
     )
 
   if (stock.isPending) return <p className="text-slate-500 dark:text-slate-400">Cargando…</p>

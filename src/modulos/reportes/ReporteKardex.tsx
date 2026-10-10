@@ -17,7 +17,7 @@ import {
 } from '@/components/estilos'
 import { NOMBRE_TIPO_DOCUMENTO } from '@/lib/documentos'
 import { exportarExcel } from '@/lib/excel'
-import { formatearFechaHora, hoyLocal, inicioDeMes, inicioDelDia } from '@/lib/fechas'
+import { formatearFechaHora, hoyLocal, inicioDeMes, inicioDelDia, textoPeriodo } from '@/lib/fechas'
 import { mensajeError } from '@/lib/supabase'
 import { formatearStock } from '@/lib/unidades'
 import { useProductos, useUbicaciones } from '@/modulos/catalogo/api'
@@ -56,26 +56,36 @@ export function ReporteKardex() {
   /** exportar: descarga el kardex en Excel (incluye el saldo inicial). */
   const exportar = () => {
     if (!producto) return
-    exportarExcel(`kardex-${producto.codigo}-${desde}-a-${hasta}`, 'Kardex', [
+    exportarExcel(
+      `kardex-${producto.codigo}-${desde}-a-${hasta}`,
+      'Kardex',
+      [
+        {
+          Fecha: desde,
+          Documento: '',
+          Tipo: 'Saldo inicial',
+          Entrada: '',
+          Salida: '',
+          Saldo: texto(saldoInicial),
+          'Saldo (unidad base)': saldoInicial,
+        },
+        ...filas.map((f) => ({
+          Fecha: formatearFechaHora(f.fecha),
+          Documento: f.numero,
+          Tipo: NOMBRE_TIPO_DOCUMENTO[f.tipo],
+          Entrada: f.entrada ? texto(f.entrada) : '',
+          Salida: f.salida ? texto(f.salida) : '',
+          Saldo: texto(f.saldo),
+          'Saldo (unidad base)': f.saldo,
+        })),
+      ],
       {
-        Fecha: desde,
-        Documento: '',
-        Tipo: 'Saldo inicial',
-        Entrada: '',
-        Salida: '',
-        Saldo: texto(saldoInicial),
-        'Saldo (unidad base)': saldoInicial,
+        titulo: `Kardex · ${producto.codigo} ${producto.nombre}`,
+        subtitulo: `${textoPeriodo(desde, hasta)} · Ubicación: ${
+          ubicaciones.data?.find((u) => u.id === ubicacion)?.nombre ?? '—'
+        }`,
       },
-      ...filas.map((f) => ({
-        Fecha: formatearFechaHora(f.fecha),
-        Documento: f.numero,
-        Tipo: NOMBRE_TIPO_DOCUMENTO[f.tipo],
-        Entrada: f.entrada ? texto(f.entrada) : '',
-        Salida: f.salida ? texto(f.salida) : '',
-        Saldo: texto(f.saldo),
-        'Saldo (unidad base)': f.saldo,
-      })),
-    ])
+    )
   }
 
   return (

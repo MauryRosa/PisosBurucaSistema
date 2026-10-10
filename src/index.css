@@ -56,4 +56,10 @@ input[type='radio'] {
     background: white;
     color: black;
   }
+
+  /* Imprimir también los fondos grises de los encabezados de la orden */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }

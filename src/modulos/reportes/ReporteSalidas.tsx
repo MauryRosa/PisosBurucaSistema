@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { claseBoton, claseCelda, claseEncabezado, claseTabla } from '@/components/estilos'
 import { NOMBRE_TIPO_DOCUMENTO } from '@/lib/documentos'
 import { exportarExcel } from '@/lib/excel'
-import { formatearFechaHora, hoyLocal, inicioDeMes } from '@/lib/fechas'
+import { formatearFechaHora, hoyLocal, inicioDeMes, textoPeriodo } from '@/lib/fechas'
 import { mensajeError } from '@/lib/supabase'
 import { formatearStock } from '@/lib/unidades'
 import { useMovimientosPeriodo } from './api'
@@ -58,6 +58,10 @@ export function ReporteSalidas() {
         'Motivo anulación': f.motivo_anulacion,
         Registró: f.registro,
       })),
+      {
+        titulo: 'Reporte de salidas por venta',
+        subtitulo: `${textoPeriodo(desde, hasta)} · ${ordenes} orden(es), ${anuladas} anulada(s), ${comprobantes} comprobante(s) vigente(s)`,
+      },
     )
 
   return (
