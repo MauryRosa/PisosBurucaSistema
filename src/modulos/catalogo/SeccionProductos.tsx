@@ -15,14 +15,16 @@ import {
 import { mensajeError } from '@/lib/supabase'
 import { useCambiarActivo, useProductos, useProveedores } from './api'
 import { FormularioProducto } from './FormularioProducto'
-import type { Producto } from './tipos'
+import { formatearM2, type Producto } from './tipos'
 
 /**
  * descripcionEmpaque: texto corto de cómo se maneja el producto.
- * Ej. "2 piezas/caja" para pisos, "bolsa" para accesorios.
+ * Ej. "3 piezas/caja · 2.16 m²/caja" para pisos, "bolsa" para accesorios.
  */
 function descripcionEmpaque(p: Producto): string {
-  return p.tipo === 'piso' ? `${p.piezas_por_caja} piezas/caja` : p.unidad
+  if (p.tipo !== 'piso') return p.unidad
+  const piezas = `${p.piezas_por_caja} piezas/caja`
+  return p.m2_por_caja ? `${piezas} · ${formatearM2(p.m2_por_caja)}/caja` : piezas
 }
 
 /**
