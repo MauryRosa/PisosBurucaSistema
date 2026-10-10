@@ -13,6 +13,8 @@ import { mensajeError } from '@/lib/supabase'
 import { useGuardarProducto } from './api'
 import {
   esquemaProducto,
+  formatearM2,
+  m2PorPieza,
   NOMBRE_DESPACHO,
   UNIDADES_ACCESORIO,
   type DatosProducto,
@@ -35,6 +37,7 @@ const VALORES_NUEVO: DatosProducto = {
   medida: '',
   unidad: 'pieza',
   piezas_por_caja: null,
+  m2_por_caja: null,
   despacho: 'caja_y_pieza',
   stock_minimo: 0,
   proveedor_id: null,
@@ -52,6 +55,7 @@ function aValoresFormulario(p: Producto): DatosProducto {
     medida: p.medida ?? '',
     unidad: p.unidad,
     piezas_por_caja: p.piezas_por_caja,
+    m2_por_caja: p.m2_por_caja === null ? null : Number(p.m2_por_caja),
     despacho: p.despacho,
     stock_minimo: p.stock_minimo,
     proveedor_id: p.proveedor_id,
@@ -79,6 +83,10 @@ export function FormularioProducto({ producto, proveedores, alTerminar }: Props)
   // Tipo elegido en este momento (para mostrar u ocultar campos)
   const tipo = useWatch({ control, name: 'tipo' })
   const esPiso = tipo === 'piso'
+
+  // Metros por pieza calculados en vivo (ej. 2.16 m² ÷ 3 piezas = 0.72 m²)
+  const [m2Caja, piezasCaja] = useWatch({ control, name: ['m2_por_caja', 'piezas_por_caja'] })
+  const metrosPieza = m2PorPieza(m2Caja, piezasCaja)
 
   /** enviar: guarda el producto y cierra el formulario si todo salió bien. */
   const enviar = async (datos: DatosProducto) => {
@@ -144,6 +152,28 @@ export function FormularioProducto({ producto, proveedores, alTerminar }: Props)
                 type="number"
                 min={1}
                 {...register('piezas_por_caja', { valueAsNumber: true })}
+                className={claseInput}
+              />
+            </Campo>
+
+            <Campo
+              etiqueta="Metros cuadrados por caja"
+              error={errors.m2_por_caja?.message}
+              ayuda={
+                metrosPieza
+                  ? `Opcional · ${formatearM2(metrosPieza)} por pieza`
+                  : 'Opcional · Ej. 2.16'
+              }
+            >
+              <input
+                type="number"
+                min={0}
+                step="0.0001"
+                inputMode="decimal"
+                {...register('m2_por_caja', {
+                  // Vacío = sin dato (null); si no, el número escrito
+                  setValueAs: (v) => (v === '' || v === null ? null : Number(v)),
+                })}
                 className={claseInput}
               />
             </Campo>

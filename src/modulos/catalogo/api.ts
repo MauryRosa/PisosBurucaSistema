@@ -81,6 +81,7 @@ function aFilaProducto(d: DatosProducto) {
     medida: esPiso && d.medida ? d.medida : null,
     unidad: esPiso ? 'pieza' : d.unidad,
     piezas_por_caja: esPiso ? d.piezas_por_caja : null,
+    m2_por_caja: esPiso ? d.m2_por_caja : null, // los accesorios no llevan metros
     despacho: esPiso ? d.despacho : 'unidad',
     stock_minimo: d.stock_minimo,
     proveedor_id: d.proveedor_id,

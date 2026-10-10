@@ -31,6 +31,7 @@ export interface Producto {
   medida: string | null
   unidad: string
   piezas_por_caja: number | null
+  m2_por_caja: number | null // metros cuadrados por caja (solo pisos, opcional)
   despacho: FormaDespacho
   stock_minimo: number
   proveedor_id: number | null
@@ -83,6 +84,12 @@ export const esquemaProducto = z
       .int('Debe ser un número entero')
       .positive('Debe ser mayor a 0')
       .nullable(),
+    // Metros cuadrados por caja: opcional, con hasta 4 decimales (ej. 2.16)
+    m2_por_caja: z
+      .number({ error: 'Ingrese un número' })
+      .positive('Debe ser mayor a 0')
+      .max(9999, 'Revise el valor')
+      .nullable(),
     despacho: z.enum(['caja', 'pieza', 'caja_y_pieza', 'unidad']),
     stock_minimo: z
       .number({ error: 'Ingrese un número' })
@@ -104,3 +111,21 @@ export const esquemaProducto = z
     }
   })
 export type DatosProducto = z.infer<typeof esquemaProducto>
+
+/**
+ * formatearM2: muestra metros cuadrados con hasta 4 decimales, sin ceros de más.
+ * Ej. 2.16 → "2.16 m²"
+ */
+export function formatearM2(metros: number): string {
+  return `${Number(metros).toLocaleString('es-SV', { maximumFractionDigits: 4 })} m²`
+}
+
+/**
+ * m2PorPieza: metros cuadrados de una pieza (m² por caja ÷ piezas por caja).
+ * Devuelve null si falta alguno de los dos datos.
+ * Ej. 2.16 m² y 3 piezas → 0.72
+ */
+export function m2PorPieza(m2PorCaja: number | null, piezasPorCaja: number | null): number | null {
+  if (!m2PorCaja || !piezasPorCaja) return null
+  return Math.round((m2PorCaja / piezasPorCaja) * 10000) / 10000
+}
